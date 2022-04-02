@@ -140,8 +140,10 @@ class Blockchain{
 
     //the new addBlock() method:
     minePendingTransactions(miningRewardAddress){
+         const rewardTx = new Transaction(null, miningRewardAddress, this.miningReward);
+        this.pendingTransactions.push(rewardTx);
         //miningRewardAdress is the address to send the reward to.
-        let block = new Block(Date.now(), this.pendingTransactions); //creating new block that contains the pending transactions.
+        let block = new Block(Date.now(), this.pendingTransactions,  this.getLatestBlock().hash); //creating new block that contains the pending transactions.
         block.mineBlock(this.difficulty); //calculating the hash of the new added block, with the right amount of zeros.
         console.log("Block successfully mined!");
         this.chain.push(block);  //pushing the block into the blockchain.
